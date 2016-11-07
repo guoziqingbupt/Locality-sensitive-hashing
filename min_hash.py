@@ -93,7 +93,12 @@ def minHash(input_matrix, b, r):
     # begin and end of band row
     begin, end = 0, r
 
+    # count the number of band level
+    count = 0
+
     while end <= sigMatrix.shape[0]:
+
+        count += 1
 
         # traverse the column of sig matrix
         for colNum in range(sigMatrix.shape[1]):
@@ -102,7 +107,8 @@ def minHash(input_matrix, b, r):
             hashObj = hashlib.md5()
 
             # calculate the hash value
-            hashObj.update(str(sigMatrix[begin: begin + r, colNum]).encode())
+            band = str(sigMatrix[begin: begin + r, colNum]) + str(count)
+            hashObj.update(band.encode())
 
             # use hash value as bucket tag
             tag = hashObj.hexdigest()
