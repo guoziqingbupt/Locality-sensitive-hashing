@@ -11,6 +11,12 @@ query = [1, 1, 0, 1, 1, 0, 0]
 
 
 def nn_search(dataSet, query):
+    """
+
+    :param dataSet: 2-dimension array
+    :param query: 1-dimension array
+    :return: the data columns in data set that are similarity with query
+    """
 
     result = set()
 
