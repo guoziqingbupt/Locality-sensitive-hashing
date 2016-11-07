@@ -3,34 +3,6 @@ import random
 import hashlib
 
 
-def rowPermutation(matrix):
-    """
-    * permute the row of the matrix
-
-    :param matrix: a ndarray var
-    :return a new matrix that has been permuted: a ndarray var
-    """
-
-    # the row sequence set
-    seqSet = [i for i in range(matrix.shape[0])]
-
-    # choose a row of matrix randomly
-    randomSeq = random.choice(seqSet)
-
-    # build the new matrix
-    new_matrix = np.array([matrix[randomSeq]])
-    seqSet.remove(randomSeq)
-
-    while len(seqSet) != 0:
-        r = random.choice(seqSet)
-
-        # add a new row into new matrix
-        new_matrix = np.row_stack((new_matrix, matrix[r]))
-        seqSet.remove(r)
-
-    return new_matrix
-
-
 def sigGen(matrix):
     """
     * generate the signature vector
@@ -39,17 +11,29 @@ def sigGen(matrix):
     :return a signature vector: a list var
     """
 
-    result = []
+    # the row sequence set
+    seqSet = [i for i in range(matrix.shape[0])]
 
-    for i in range(matrix.shape[1]):
-        for j in range(matrix.shape[0]):
+    result = [-1 for i in range(matrix.shape[1])]
 
-            # find the first row of i column whose value is not 0(is 1)
-            if matrix[j][i] != 0:
-                result.append(j)
-                break
+    count = 0
 
-    # return a list
+    while len(seqSet) > 0:
+
+        # choose a row of matrix randomly
+        randomSeq = random.choice(seqSet)
+
+        for i in range(matrix.shape[1]):
+
+            if matrix[randomSeq][i] != 0 and result[i] == -1:
+                result[i] = randomSeq
+                count += 1
+        if count == matrix.shape[1]:
+            break
+
+        seqSet.remove(randomSeq)
+        # return a list
+
     return result
 
 
@@ -65,8 +49,8 @@ def sigMatrixGen(input_matrix, n):
     result = []
 
     for i in range(n):
-        new_matrix = rowPermutation(input_matrix)
-        result.append(sigGen(new_matrix))
+        sig = sigGen(input_matrix)
+        result.append(sig)
 
     # return a ndarray
     return np.array(result)
