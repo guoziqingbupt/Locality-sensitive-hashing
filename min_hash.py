@@ -14,6 +14,7 @@ def sigGen(matrix):
     # the row sequence set
     seqSet = [i for i in range(matrix.shape[0])]
 
+    # initialize the sig vector as [-1, -1, ..., -1]
     result = [-1 for i in range(matrix.shape[1])]
 
     count = 0
@@ -32,8 +33,8 @@ def sigGen(matrix):
             break
 
         seqSet.remove(randomSeq)
-        # return a list
 
+    # return a list
     return result
 
 
@@ -108,4 +109,28 @@ def minHash(input_matrix, b, r):
     # return a dictionary
     return hashBuckets
 
+
+def minHash_nn_search(dataSet, query):
+    """
+
+    :param dataSet: 2-dimension array
+    :param query: 1-dimension array
+    :return: the data columns in data set that are similarity with query
+    """
+
+    result = set()
+
+    dataSet.append(query)
+    input_matrix = np.array(dataSet).T
+    hashBucket = minHash(input_matrix, 20, 5)
+
+    queryCol = input_matrix.shape[1] - 1
+
+    for key in hashBucket:
+        if queryCol in hashBucket[key]:
+            for i in hashBucket[key]:
+                result.add(i)
+
+    result.remove(queryCol)
+    return result
 
