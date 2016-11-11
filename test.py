@@ -1,5 +1,5 @@
 import e2LSH
-from aux import *
+from test_aux import *
 
 
 if __name__ == "__main__":
