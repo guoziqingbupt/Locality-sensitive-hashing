@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="992a4283-0cee-49cb-a411-f0237e4a5cc1" name="Default" comment="" />
+    <list default="true" id="992a4283-0cee-49cb-a411-f0237e4a5cc1" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_aux.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
+    </list>
     <ignored path="Locality-sensitive-hashing.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -57,8 +60,8 @@
         <option value="$PROJECT_DIR$/e2LSH.py" />
         <option value="$PROJECT_DIR$/min_hash.py" />
         <option value="$PROJECT_DIR$/myself.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/aux.py" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
@@ -627,9 +630,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>

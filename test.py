@@ -1,5 +1,5 @@
 import e2LSH
-from test_aux import *
+from test_helper import *
 
 
 if __name__ == "__main__":
