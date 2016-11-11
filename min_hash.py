@@ -110,7 +110,7 @@ def minHash(input_matrix, b, r):
     return hashBuckets
 
 
-def minHash_nn_search(dataSet, query):
+def nn_search(dataSet, query):
     """
 
     :param dataSet: 2-dimension array

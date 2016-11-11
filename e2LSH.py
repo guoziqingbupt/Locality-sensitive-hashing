@@ -45,7 +45,7 @@ def gen_HashVals(e2LSH_family, v, r):
     :param e2LSH_family: include k hash funcs(parameters)
     :param v: data vector
     :param r:
-    :return:
+    :return hash values: a list
     """
 
     # hashVals include k values
@@ -82,7 +82,7 @@ def e2LSH(dataSet, k, L, r, tableSize):
     :param L:
     :param r:
     :param tableSize:
-    :return: hash table
+    :return: 3 elements, hash table, hash functions, fpRand
     """
 
     hashTable = [TableNode(i) for i in range(tableSize)]
@@ -91,12 +91,16 @@ def e2LSH(dataSet, k, L, r, tableSize):
     m = len(dataSet)
 
     C = pow(2, 32) - 5
+    hashFuncs = []
+    fpRand = [random.randint(-10, 10) for i in range(k)]
 
     for times in range(L):
 
-        fpRand = [random.randint(-10, 10) for i in range(k)]
-
         e2LSH_family = gen_e2LSH_family(n, k, r)
+
+        # hashFuncs: [[h1, ...hk], [h1, ..hk], ..., [h1, ...hk]]
+        # hashFuncs include L hash functions group, and each group contain k hash functions
+        hashFuncs.append(e2LSH_family)
 
         for dataIndex in range(m):
 
@@ -124,4 +128,40 @@ def e2LSH(dataSet, k, L, r, tableSize):
             else:
                 node.buckets[fp] = [dataIndex]
 
-    return hashTable
+    return hashTable, hashFuncs, fpRand
+
+
+def nn_search(dataSet, query, k, L, r, tableSize):
+    """
+
+    :param dataSet:
+    :param query:
+    :param k:
+    :param L:
+    :param r:
+    :param tableSize:
+    :return: the data index that similar with query
+    """
+
+    result = set()
+
+    temp = e2LSH(dataSet, k, L, r, tableSize)
+    C = pow(2, 32) - 5
+
+    hashTable = temp[0]
+    hashFuncGroups = temp[1]
+    fpRand = temp[2]
+
+    for hashFuncGroup in hashFuncGroups:
+
+        # get the fingerprint of query
+        queryFp = H2(gen_HashVals(hashFuncGroup, query, r), fpRand, k, C)
+
+        # get the index of query in hash table
+        queryIndex = queryFp % tableSize
+
+        # get the bucket in the dictionary
+        if queryFp in hashTable[queryIndex].buckets:
+            result.update(hashTable[queryIndex].buckets[queryFp])
+
+    return result
